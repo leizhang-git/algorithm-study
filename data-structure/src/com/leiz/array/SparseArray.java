@@ -13,10 +13,12 @@ public class SparseArray {
         int[][] arr = new int[11][11];
 
         /*
-            00000
-            00100
-            00010
-            00001
+            00000000000
+            00100000000
+            00010000000
+            00000000000
+            00000100000
+            ...
          */
         arr[1][2] = 1;
         arr[2][3] = 1;
@@ -27,6 +29,17 @@ public class SparseArray {
         System.out.println("稀疏数组为：");
         for (int[] ints : sparseArray) {
             System.out.printf("%d\t%d\t%d\t\n", ints[0], ints[1], ints[2]);
+        }
+
+        System.out.println("============================================================");
+        System.out.println("恢复到原数组为");
+
+        int[][] array = rollbackArray(sparseArray);
+        for (int[] ints : array) {
+            for (int anInt : ints) {
+                System.out.print(anInt + " ");
+            }
+            System.out.println();
         }
     }
 
@@ -65,5 +78,20 @@ public class SparseArray {
             }
         }
         return sparseArr;
+    }
+
+    /**
+     * 将稀疏数组恢复至原数组
+     * @param sparseArr
+     * @return
+     */
+    public static int[][] rollbackArray(int[][] sparseArr) {
+        //读取稀疏数组第一行，建立原数组
+        int[][] arr = new int[sparseArr[0][0]][sparseArr[0][1]];
+        //将数组重新填入
+        for (int i = 1; i < sparseArr.length; i++) {
+            arr[sparseArr[i][0]][sparseArr[i][1]] = sparseArr[i][2];
+        }
+        return arr;
     }
 }
